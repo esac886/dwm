@@ -99,6 +99,7 @@ static const Key keys[] = {
     // navigation
     { MODKEY,            XK_j,                     focusstack,  { .i = +1  } },
     { MODKEY,            XK_k,                     focusstack,  { .i = -1  } },
+    { MODKEY,            XK_y,                     focusmon,    { .i = -1  } },
     { MODKEY,            XK_comma,                 focusmon,    { .i = -1  } },
     { MODKEY,            XK_period,                focusmon,    { .i = +1  } },
     { MODKEY,            XK_0,                     view,        { .ui = ~0 } },
