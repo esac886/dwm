@@ -43,7 +43,7 @@ sudo make clean install
 #### Media
 
 - `Vol+/-` media keys for adjusting sound
-- `Alt-a` for changing default audio output (custom script that works only on my machine. dwm trying to execute it at `~/.config/toggle_sink.sh` path)
+- `Alt-a` for changing default audio output (custom script that works only on my machine. dwm trying to execute it as `toggle-sink` in $PATH)
 
 ---
 

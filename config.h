@@ -69,7 +69,7 @@ static const char shot_activewincmd[] = "maim --format=png --window $(xdotool ge
 
 static const char *volume_upcmd[] = { "pactl", "set-sink-volume", "@DEFAULT_SINK@", "+5%", NULL };
 static const char *volume_downcmd[] = { "pactl", "set-sink-volume", "@DEFAULT_SINK@", "-5%", NULL };
-static const char volume_switchcmd[] = "~/.config/toggle_sink.sh";
+static const char volume_switchcmd[] = "toggle-sink";
 
 static const Key keys[] = {
     /* modifier          key                       function         argument */
