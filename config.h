@@ -6,7 +6,7 @@ static const unsigned int gappx     = 14;       /* gap pixel between windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const char *fonts[]          = { "monospace:size=14" };
+static const char *fonts[]          = { "Cascadia Mono NF:size=15" };
 static const char dmenufont[]       = "monospace:size=14";
 static const char col_gray1[]       = "#222222";
 static const char col_gray2[]       = "#444444";
@@ -60,16 +60,18 @@ static const Layout layouts[] = {
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_gray2, "-sf", col_gray4, NULL };
 static const char *termcmd[]  = { "st", NULL };
-static const char *browsercmd[] = {"qutebrowser", NULL};
-static const char *messengercmd[] = {"telegram-desktop", NULL};
+static const char *browsercmd[] = { "qutebrowser", NULL };
+static const char *messengercmd[] = { "telegram-desktop", NULL };
 
 static const char screenshot_cmd[] = "maim --format=png | xclip -selection clipboard -t image/png";
 static const char shot_selectioncmd[] = "maim --format=png --select | xclip -selection clipboard -t image/png";
 static const char shot_activewincmd[] = "maim --format=png --window $(xdotool getactivewindow) | xclip -selection clipboard -t image/png";
 
-static const char *volume_upcmd[] = { "pactl", "set-sink-volume", "@DEFAULT_SINK@", "+5%", NULL };
-static const char *volume_downcmd[] = { "pactl", "set-sink-volume", "@DEFAULT_SINK@", "-5%", NULL };
-static const char volume_switchcmd[] = "toggle-sink";
+static const char volume_upcmd[] = "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+ -l 1  && pkill -RTMIN+2 dwmblocks";
+static const char volume_downcmd[] = "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-  && pkill -RTMIN+2 dwmblocks";
+static const char volume_switchcmd[] = "toggle-sink && pkill -RTMIN+2 dwmblocks";
+
+/* static const char *send_layoutsigcmd[] = { "pkill", "-RTMIN+1", "dwmblocks", NULL }; */
 
 static const Key keys[] = {
     /* modifier          key                       function         argument */
@@ -80,9 +82,11 @@ static const Key keys[] = {
     { MODKEY,            XK_e,                     spawn,           { .v = messengercmd } },
 
     // audio
-    { 0,                 XF86XK_AudioRaiseVolume,  spawn,           { .v = volume_upcmd     } },
-    { 0,                 XF86XK_AudioLowerVolume,  spawn,           { .v = volume_downcmd   } },
+    { 0,                 XF86XK_AudioRaiseVolume,  spawn,           SHCMD(volume_upcmd)     },
+    { 0,                 XF86XK_AudioLowerVolume,  spawn,           SHCMD(volume_downcmd)   },
     { MODKEY,            XK_a,                     spawn,           SHCMD(volume_switchcmd) },
+
+    /* { 0,                 XK_Super_L,               spawn,           { .v = send_layoutsigcmd } }, */
 
     // printscreen
     { 0,                 XK_Print,                 spawn,           SHCMD(shot_selectioncmd) },

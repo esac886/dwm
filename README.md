@@ -5,11 +5,11 @@ dwm is minimal wm for nerds.
 ## Quick start
 
 dwm depends on libX11, libXinerama and libXft.
-Also this config depends on `maim` for taking screenshots.
+Also this config depends on `maim` for taking screenshots, and uses Cascadia Mono NF by default (you should install it or change font name in `config.h`).
 
 ```shell
 # on fedora
-sudo dnf install libX11-devel libXinerama-devel libXft-devel maim
+sudo dnf install libX11-devel libXinerama-devel libXft-devel maim cascadia-mono-nerd-fonts
 sudo make clean install
 ```
 
@@ -42,7 +42,7 @@ sudo make clean install
 
 #### Media
 
-- `Vol+/-` media keys for adjusting sound
+- `Vol+/-` media keys for adjusting sound (it uses wireplumber by default)
 - `Alt-a` for changing default audio output (custom script that works only on my machine. dwm trying to execute it as `toggle-sink` in $PATH)
 
 ---
