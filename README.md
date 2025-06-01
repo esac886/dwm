@@ -21,6 +21,7 @@ sudo make clean install
 - [hide_vacant_tags](https://dwm.suckless.org/patches/hide_vacant_tags)
 - [noborder](https://dwm.suckless.org/patches/noborder)
 - [refreshrate](https://dwm.suckless.org/patches/refreshrate)
+- [warp](https://dwm.suckless.org/patches/warp)
 
 ## My additions
 
@@ -55,6 +56,6 @@ Also changed title bg color to bar color with titlecolor patch.
 
 ### Source code
 
-Included X11/XF86keysym.h in dwm.c for media keys (for example vol+/-) to be working.
-
-Changed monocle mode rendering for adding gaps (fullgaps patch adds gaps only in tile mode).
+- Included X11/XF86keysym.h in dwm.c for media keys (for example vol+/-) to be working.
+- Changed monocle mode rendering for adding gaps (fullgaps patch adds gaps only in tile mode).
+- Changed the position where the cursor moves when window is focused. Now it moves closer to bottom-right corner.
