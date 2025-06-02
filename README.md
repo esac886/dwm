@@ -31,6 +31,7 @@ sudo make clean install
 - `Alt-s` for swapping windows in tile layout mode (`Alt-Return` by default)
 - `Alt-Shift-f` for toggling floating on window (`Alt-Shift-Space` by default)
 - `Alt-Shift-b` for toggling bar (`Alt-b` by default)
+- `Alt-g` for toggling gaps
 - `Alt-q` for killing window (`Alt-Shift-c` by default)
 
 #### Running programs
