@@ -2,7 +2,7 @@
 
 /* appearance */
 static const unsigned int borderpx  = 2;        /* border pixel of windows */
-static const unsigned int gappx     = 14;       /* gap pixel between windows */
+static const Gap default_gap        = {.isgap = 1, .realgap = 10, .gappx = 14};
 static const unsigned int snap      = 32;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
@@ -28,7 +28,6 @@ static const Rule rules[] = {
 	 *	WM_NAME(STRING) = title
 	 */
 	/* class      instance    title       tags mask     isfloating   monitor */
-	/* { "Gimp",     NULL,       NULL,       0,            1,           -1 }, */
 	{ "Firefox",  NULL,       NULL,       1 << 8,       0,           -1 },
 };
 
@@ -86,8 +85,6 @@ static const Key keys[] = {
     { 0,                 XF86XK_AudioLowerVolume,  spawn,           SHCMD(volume_downcmd)   },
     { MODKEY,            XK_a,                     spawn,           SHCMD(volume_switchcmd) },
 
-    /* { 0,                 XK_Super_L,               spawn,           { .v = send_layoutsigcmd } }, */
-
     // printscreen
     { 0,                 XK_Print,                 spawn,           SHCMD(shot_selectioncmd) },
     { ShiftMask,         XK_Print,                 spawn,           SHCMD(shot_activewincmd) },
@@ -123,6 +120,10 @@ static const Key keys[] = {
     { MODKEY,            XK_Tab,                   view,        {0} },
     { MODKEY,            XK_q,                     killclient,  {0} },
     { MODKEY|ShiftMask,  XK_q,                     quit,        {0} },
+	{ MODKEY,            XK_g,                     setgaps,     { .i = GAP_TOGGLE } },
+    // fullscreen
+	{ MODKEY|ShiftMask,  XK_g,                     togglebar,   {0} },
+    { MODKEY|ShiftMask,  XK_g,                     setgaps,     { .i = GAP_TOGGLE } },
 
     // tags
     TAGKEYS(XK_1, 0)
@@ -152,4 +153,3 @@ static const Button buttons[] = {
 	{ ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
 	{ ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },
 };
-
