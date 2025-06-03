@@ -5,12 +5,18 @@ dwm is minimal wm for nerds.
 ## Quick start
 
 dwm depends on libX11, libXinerama and libXft.
-Also this config depends on `maim` for taking screenshots, and uses Cascadia Mono NF by default (you should install it or change font name in `config.h`).
+
+Also this config depends on:
+- maim for screenshots
+- Cascadia Mono NF by default (you can change font in `config.h`).
+- my [record script](https://github.com/esac886/scripts/blob/main/record) for recording screen with audio (it uses ffmpeg, slop and pactl for working with pipewire)
+- my [toggle script](https://github.com/esac886/scripts/blob/main/toggle-sink) for toggling default output audio device for pipewire. it'll work only on my machine due to hardcoded audio sinks
 
 ```shell
 # on fedora
 sudo dnf install libX11-devel libXinerama-devel libXft-devel maim cascadia-mono-nerd-fonts
 sudo make clean install
+# to use record and toggling audio output keybindings you must install scripts and put them in $PATH
 ```
 
 ## Patches applied
@@ -39,11 +45,14 @@ sudo make clean install
 - `Alt-Return` for opening `st` terminal (`Alt-Shift-Return` by default)
 - `Alt-b` for opening `qutebrowser`
 - `Alt-e` for opening `telegram-desktop`
+- `Alt-r` executes `record -il` from $PATH (records screen with default loopback sound)
+- `Alt-Shift-r` executes `record -i` from $PATH (records screen without sound)
+- `Alt-Ctrl-r` executes `record -is` from $PATH (records selected region of screen without sound)
 
 #### Media
 
 - `Vol+/-` media keys for adjusting sound (it uses wireplumber by default)
-- `Alt-a` for changing default audio output (custom script that works only on my machine. dwm trying to execute it as `toggle-sink` in $PATH)
+- `Alt-a` executes `toggle-sink` from $PATH (custom script that works only on my machine. [see](https://github.com/esac886/scripts/blob/main/toggle-sink)) 
 
 ---
 

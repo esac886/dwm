@@ -62,7 +62,7 @@ static const char *termcmd[]  = { "st", NULL };
 static const char *browsercmd[] = { "qutebrowser", NULL };
 static const char *messengercmd[] = { "telegram-desktop", NULL };
 
-static const char screenshot_cmd[] = "maim --format=png | xclip -selection clipboard -t image/png";
+static const char screenshotcmd[] = "maim --format=png | xclip -selection clipboard -t image/png";
 static const char shot_selectioncmd[] = "maim --format=png --select | xclip -selection clipboard -t image/png";
 static const char shot_activewincmd[] = "maim --format=png --window $(xdotool getactivewindow) | xclip -selection clipboard -t image/png";
 
@@ -70,60 +70,67 @@ static const char volume_upcmd[] = "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+ -l
 static const char volume_downcmd[] = "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-  && pkill -RTMIN+2 dwmblocks";
 static const char volume_switchcmd[] = "toggle-sink && pkill -RTMIN+2 dwmblocks";
 
-/* static const char *send_layoutsigcmd[] = { "pkill", "-RTMIN+1", "dwmblocks", NULL }; */
+static const char *recordcmd[] = { "record", "-i", NULL };
+static const char *record_wsoundcmd[] = { "record", "-il", NULL };
+static const char *record_wselectioncmd[] = { "record", "-is", NULL };
 
 static const Key keys[] = {
-    /* modifier          key                       function         argument */
+    /* modifier            key                       function         argument */
     // spawn
-    { MODKEY,            XK_p,                     spawn,           { .v = dmenucmd     } },
-    { MODKEY,            XK_Return,                spawn,           { .v = termcmd      } },
-    { MODKEY,            XK_b,                     spawn,           { .v = browsercmd   } },
-    { MODKEY,            XK_e,                     spawn,           { .v = messengercmd } },
+    { MODKEY,              XK_p,                     spawn,           { .v = dmenucmd     } },
+    { MODKEY,              XK_Return,                spawn,           { .v = termcmd      } },
+    { MODKEY,              XK_b,                     spawn,           { .v = browsercmd   } },
+    { MODKEY,              XK_e,                     spawn,           { .v = messengercmd } },
 
     // audio
-    { 0,                 XF86XK_AudioRaiseVolume,  spawn,           SHCMD(volume_upcmd)     },
-    { 0,                 XF86XK_AudioLowerVolume,  spawn,           SHCMD(volume_downcmd)   },
-    { MODKEY,            XK_a,                     spawn,           SHCMD(volume_switchcmd) },
+    { 0,                   XF86XK_AudioRaiseVolume,  spawn,           SHCMD(volume_upcmd)     },
+    { 0,                   XF86XK_AudioLowerVolume,  spawn,           SHCMD(volume_downcmd)   },
+    { MODKEY,              XK_a,                     spawn,           SHCMD(volume_switchcmd) },
 
     // printscreen
-    { 0,                 XK_Print,                 spawn,           SHCMD(shot_selectioncmd) },
-    { ShiftMask,         XK_Print,                 spawn,           SHCMD(shot_activewincmd) },
-    { ControlMask,       XK_Print,                 spawn,           SHCMD(screenshot_cmd)    },
+    { 0,                   XK_Print,                 spawn,           SHCMD(shot_selectioncmd) },
+    { ShiftMask,           XK_Print,                 spawn,           SHCMD(shot_activewincmd) },
+    { ControlMask,         XK_Print,                 spawn,           SHCMD(screenshotcmd)     },
+
+    // record scr
+    { MODKEY,              XK_r,                     spawn,           { .v = record_wsoundcmd     } },
+    { MODKEY|ShiftMask,    XK_r,                     spawn,           { .v = recordcmd            } },
+    { MODKEY|ControlMask,  XK_r,                     spawn,           { .v = record_wselectioncmd } },
 
     // mods
-    { MODKEY,            XK_t,                     setlayout,       { .v = &layouts[0] } },
-    { MODKEY,            XK_f,                     setlayout,       { .v = &layouts[1] } },
-    { MODKEY,            XK_m,                     setlayout,       { .v = &layouts[2] } },
-    { MODKEY,            XK_space,                 setlayout,       {0} },
-    { MODKEY|ShiftMask,  XK_f,                     togglefloating,  {0} },
+    { MODKEY,              XK_t,                     setlayout,       { .v = &layouts[0] } },
+    { MODKEY,              XK_f,                     setlayout,       { .v = &layouts[1] } },
+    { MODKEY,              XK_m,                     setlayout,       { .v = &layouts[2] } },
+    { MODKEY,              XK_space,                 setlayout,       {0} },
+    { MODKEY|ShiftMask,    XK_f,                     togglefloating,  {0} },
 
     // navigation
-    { MODKEY,            XK_j,                     focusstack,  { .i = +1  } },
-    { MODKEY,            XK_k,                     focusstack,  { .i = -1  } },
-    { MODKEY,            XK_y,                     focusmon,    { .i = -1  } },
-    { MODKEY,            XK_comma,                 focusmon,    { .i = -1  } },
-    { MODKEY,            XK_period,                focusmon,    { .i = +1  } },
-    { MODKEY,            XK_0,                     view,        { .ui = ~0 } },
-    { MODKEY|ShiftMask,  XK_0,                     tag,         { .ui = ~0 } },
-    { MODKEY|ShiftMask,  XK_comma,                 tagmon,      { .i = -1  } },
-    { MODKEY|ShiftMask,  XK_period,                tagmon,      { .i = +1  } },
+    { MODKEY,              XK_j,                     focusstack,      { .i = +1  } },
+    { MODKEY,              XK_k,                     focusstack,      { .i = -1  } },
+    { MODKEY,              XK_y,                     focusmon,        { .i = -1  } },
+    { MODKEY,              XK_comma,                 focusmon,        { .i = -1  } },
+    { MODKEY,              XK_period,                focusmon,        { .i = +1  } },
+    { MODKEY,              XK_0,                     view,            { .ui = ~0 } },
+    { MODKEY|ShiftMask,    XK_0,                     tag,             { .ui = ~0 } },
+    { MODKEY|ShiftMask,    XK_comma,                 tagmon,          { .i = -1  } },
+    { MODKEY|ShiftMask,    XK_period,                tagmon,          { .i = +1  } },
 
     // tiling
-    { MODKEY,            XK_s,                     zoom,        {0} },
-    { MODKEY,            XK_i,                     incnmaster,  { .i = +1 } },
-    { MODKEY,            XK_d,                     incnmaster,  { .i = -1 } },
+    { MODKEY,              XK_s,                     zoom,            {0} },
+    { MODKEY,              XK_i,                     incnmaster,      { .i = +1 } },
+    { MODKEY,              XK_d,                     incnmaster,      { .i = -1 } },
 
     // misc
-    { MODKEY,            XK_h,                     setmfact,    { .f = -0.05 } },
-    { MODKEY,            XK_l,                     setmfact,    { .f = +0.05 } },
-    { MODKEY|ShiftMask,  XK_b,                     togglebar,   {0} },
-    { MODKEY,            XK_Tab,                   view,        {0} },
-    { MODKEY,            XK_q,                     killclient,  {0} },
-    { MODKEY|ShiftMask,  XK_q,                     quit,        {0} },
-	{ MODKEY,            XK_g,                     setgaps,     { .i = GAP_TOGGLE } },
+    { MODKEY,              XK_h,                     setmfact,        { .f = -0.05 } },
+    { MODKEY,              XK_l,                     setmfact,        { .f = +0.05 } },
+    { MODKEY|ShiftMask,    XK_b,                     togglebar,       {0} },
+    { MODKEY,              XK_Tab,                   view,            {0} },
+    { MODKEY,              XK_q,                     killclient,      {0} },
+    { MODKEY|ShiftMask,    XK_q,                     quit,            {0} },
+	{ MODKEY,              XK_g,                     setgaps,         { .i = GAP_TOGGLE } },
     // fullscreen
-	{ MODKEY|ShiftMask,  XK_g,                     togglebar,   {0} },
-    { MODKEY|ShiftMask,  XK_g,                     setgaps,     { .i = GAP_TOGGLE } },
+	{ MODKEY|ShiftMask,    XK_g,                     togglebar,       {0} },
+    { MODKEY|ShiftMask,    XK_g,                     setgaps,         { .i = GAP_TOGGLE } },
 
     // tags
     TAGKEYS(XK_1, 0)
